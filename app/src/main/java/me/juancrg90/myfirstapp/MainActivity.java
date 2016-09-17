@@ -1,40 +1,36 @@
 package me.juancrg90.myfirstapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "me.juancrg90.myfirstapp.MESSAGE";
-
+    @Bind(R.id.editText)
+    EditText editText;
+    @Bind(R.id.buttonSend)
     Button btnSend;
-    EditText message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        btnSend = (Button)findViewById(R.id.buttonSend);
-        message = (EditText) findViewById(R.id.editText);
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage(view);
-            }
-        });
-
+        ButterKnife.bind(this);
 
     }
 
+    @OnClick(R.id.buttonSend)
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        String messageToSend = message.getText().toString();
+        String messageToSend = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, messageToSend);
         startActivity(intent);
 
